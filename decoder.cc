@@ -19,12 +19,12 @@ int main(int argc, char *argv[])
 {
 
     int N = 12;
-    int N_sample = 500;
+    int N_sample = 2000;
     double theta0; // error rate
     double theta0_prob;
     double theta1; // stabilizer operator
     double theta2; // logical x operator
-    int const n_t = 3;
+    int const n_t = 10;
     int const n_simu = 50;
     double measure0;
     double measure1 = 0.0;
@@ -124,13 +124,15 @@ int main(int argc, char *argv[])
 
             // measure the logical Z operator
 
+            auto psi_1 = psi;
+
             if (time % 2 == 0)
             {
-                measure1 = -measure_average(psi, N_sample);
+                measure1 = -measure_average(psi_1, N_sample);
             }
             else
             {
-                measure1 = measure_average(psi, N_sample);
+                measure1 = measure_average(psi_1, N_sample);
             }
 
             measur1list[time] = measur1list[time] + measure1 / n_simu;
@@ -141,11 +143,8 @@ int main(int argc, char *argv[])
 
             auto logxmpo = AutoMPO(sites);
             logxmpo += sin(theta2) * Cplx_i, "Sx", 7, "Sx", 8;
-            cout << 1 << endl;
             auto Hlogx = toMPO(logxmpo);
-            cout << 2 << endl;
             psi = sum(cos(theta2) * psi, applyMPO(Hlogx, psi, args).noPrime("Site"), args);
-            cout << 3 << endl;
             psi.normalize();
 
             // auto logxmpo = AutoMPO(sites);
@@ -158,22 +157,21 @@ int main(int argc, char *argv[])
             // for (int i = 7; i < 9; i++)
             // {
             //     auto logxmpo = AutoMPO(sites);
-            //     logxmpo += "Sx", i;
+            //     logxmpo += sin(theta2) * Cplx_i, "Sx", i;
             //     auto Hlogx = toMPO(logxmpo);
-            //     auto expHlogx = toExpH(logxmpo, theta2 * Cplx_i);
-            //     psi = applyMPO(expHlogx, psi, args).noPrime("Site");
+            //     psi = sum(cos(theta2) * psi, applyMPO(Hlogx, psi, args).noPrime("Site"), args);
+            //     psi.normalize();
             // }
-            // psi.normalize();
-            // PrintData(psi);
 
             // measure the logical Z operation
+            auto psi_2 = psi;
             if (time % 2 == 0)
             {
-                measure2 = -measure_average(psi, N_sample);
+                measure2 = -measure_average(psi_2, N_sample);
             }
             else
             {
-                measure2 = measure_average(psi, N_sample);
+                measure2 = measure_average(psi_2, N_sample);
             }
 
             measur2list[time] = measur2list[time] + measure2 / n_simu;

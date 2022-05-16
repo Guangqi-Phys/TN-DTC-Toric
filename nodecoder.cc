@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
                 // auto expHlogx = toExpH(logxmpo, theta2 * Cplx_i);
                 // psi = applyMPO(expHlogx, psi, args).noPrime("Site");
             }
-            psi.normalize();
+            // psi.normalize();
             // PrintData(psi);
 
             // measure the logical Z operation

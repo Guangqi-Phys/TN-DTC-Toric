@@ -4,7 +4,7 @@ import networkx as nx
 def initial_states(lx,ly,n_psi):
 	len = lx*ly*2
 	qubits_str = (bin(n_psi).replace('0b','')).zfill(len)
-	qubits_str = qubits_str[::-1]
+	# qubits_str = qubits_str[::-1]
 	er_qubits = [[0 for col in range(lx)] for row in range(2*ly)]
 	m_stablz = [[0 for col in range(lx)] for row in range(ly)]
 	for i_row in range(2*ly):

@@ -46,8 +46,8 @@ set title "" font ",24"
 
 plot 'nodecoder_N=12_MaxDim=100.dat' using 1:2 with lines ls 1 lw 2 t "maxdim = 100",\
 'nodecoder_N=12_MaxDim=100.dat' using 1:3 with lines ls 1 lw 2 t "",\
-'nodecoder_N=12.dat' using 1:2 with lines ls 2 lw 2 t "maxdim = 1000",\
-'nodecoder_N=12.dat' using 1:3 with lines ls 2 lw 2 t "",\
+'nodecoder_N=12_MaxDim=500.dat' using 1:2 with lines ls 2 lw 2 t "maxdim = 1000",\
+'nodecoder_N=12_MaxDim=500.dat' using 1:3 with lines ls 2 lw 2 t "",\
 'nodecoder_dx=3.dat' using 1:2 with lines ls 3 lw 2 t "normal",\
 'nodecoder_dx=3.dat' using 1:3 with lines ls 3 lw 2 t "",\
 
