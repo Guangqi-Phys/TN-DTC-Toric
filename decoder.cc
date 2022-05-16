@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
     int const n_t = 3;
     int const n_simu = 50;
     double measure0;
-    double measure1;
-    double measure2;
+    double measure1 = 0.0;
+    double measure2 = 0.0;
     auto sites = SpinHalf(N, {"ConserveQNs=", false});
     auto state = InitState(sites);
     double measur1list[n_t] = {0};
@@ -81,12 +81,14 @@ int main(int argc, char *argv[])
 
             for (int i_er = 1; i_er < N; ++i_er)
             {
-                auto x_er = AutoMPO(sites);
-                x_er += "Sx", i_er;
-                auto xer_mpo = toMPO(x_er);
                 theta0_prob = theta0 + dist0(engine0);
-                auto exp_xer_mpo = toExpH(x_er, theta0_prob * Cplx_i);
-                psi = applyMPO(exp_xer_mpo, psi, args).noPrime("Site");
+                auto x_er = AutoMPO(sites);
+                x_er += sin(theta0_prob) * Cplx_i, "Sx", i_er;
+                auto xer_mpo = toMPO(x_er);
+                // auto exp_xer_mpo = toExpH(x_er, theta0_prob * Cplx_i);
+                // psi = applyMPO(exp_xer_mpo, psi, args).noPrime("Site");
+                psi = sum(cos(theta0_prob) * psi, applyMPO(xer_mpo, psi, args).noPrime("Site"), args);
+                psi.normalize();
             }
 
             // applying stabilizer operators
@@ -121,6 +123,7 @@ int main(int argc, char *argv[])
             // PrintData(vec1[1]);
 
             // measure the logical Z operator
+
             if (time % 2 == 0)
             {
                 measure1 = -measure_average(psi, N_sample);
@@ -141,7 +144,7 @@ int main(int argc, char *argv[])
             cout << 1 << endl;
             auto Hlogx = toMPO(logxmpo);
             cout << 2 << endl;
-            psi = sum(cos(theta2) * psi, applyMPO(Hlogz, psi, args).noPrime("Site"), args);
+            psi = sum(cos(theta2) * psi, applyMPO(Hlogx, psi, args).noPrime("Site"), args);
             cout << 3 << endl;
             psi.normalize();
 
@@ -149,7 +152,7 @@ int main(int argc, char *argv[])
             // logxmpo += "Sx", 7, "Sx", 8;
             // auto Hlogx = toMPO(logxmpo);
             // auto expHlogx = toExpH(logxmpo, theta2 * Cplx_i, args);
-            // psi = applyMPO(expHlogx, psi, args).noPrime("Site");
+            // psi = ApplyMPO(expHlogx, psi, args).noPrime("Site");
             // psi.normalize();
 
             // for (int i = 7; i < 9; i++)
@@ -160,7 +163,7 @@ int main(int argc, char *argv[])
             //     auto expHlogx = toExpH(logxmpo, theta2 * Cplx_i);
             //     psi = applyMPO(expHlogx, psi, args).noPrime("Site");
             // }
-            psi.normalize();
+            // psi.normalize();
             // PrintData(psi);
 
             // measure the logical Z operation
