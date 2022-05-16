@@ -16,7 +16,7 @@ using std::vector;
 int main(int argc, char *argv[])
 {
 
-    int N = 20;
+    int N = 12;
     double theta0; // error rate
     double theta0_prob;
     double theta1; // stabilizer operator
@@ -46,7 +46,8 @@ int main(int argc, char *argv[])
 
     // define the logical z operator
     auto logzmpo = AutoMPO(sites);
-    logzmpo += pow(2, (N / 4)), "Sz", 3, "Sz", 7, "Sz", 11, "Sz", 15, "Sz", 19;
+    logzmpo += pow(2, (N / 4)), "Sz", 3, "Sz", 7, "Sz", 11;
+    auto Hlogz = toMPO(logzmpo);
 
     auto args = Args("Cutoff=", 1E-16, "MaxDim=", 500);
 
@@ -117,11 +118,11 @@ int main(int argc, char *argv[])
             // measure the logical Z operator
             if (time % 2 == 0)
             {
-                measure1 = -real(innerC(psi, logzmpo, psi));
+                measure1 = -real(innerC(psi, Hlogz, psi));
             }
             else
             {
-                measure1 = real(innerC(psi, logzmpo, psi));
+                measure1 = real(innerC(psi, Hlogz, psi));
             }
 
             measur1list[time] = measur1list[time] + measure1 / n_simu;
@@ -157,11 +158,11 @@ int main(int argc, char *argv[])
             // measure the logical Z operation
             if (time % 2 == 0)
             {
-                measure2 = -real(innerC(psi, logzmpo, psi));
+                measure2 = -real(innerC(psi, Hlogz, psi));
             }
             else
             {
-                measure2 = real(innerC(psi, logzmpo, psi));
+                measure2 = real(innerC(psi, Hlogz, psi));
             }
 
             measur2list[time] = measur2list[time] + measure2 / n_simu;

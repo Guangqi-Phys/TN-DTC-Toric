@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     double theta0_prob;
     double theta1; // stabilizer operator
     double theta2; // logical x operator
-    int const n_t = 5;
+    int const n_t = 3;
     int const n_simu = 50;
     double measure0;
     double measure1;
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
     // PrintData(state);
     theta0 = 0.02 * M_PI;
-    theta1 = 0.25 * M_PI;
+    theta1 = 0.10 * M_PI;
     theta2 = 0.5 * M_PI;
 
     pcg_extras::seed_seq_from<random_device> seed_source;
@@ -138,12 +138,15 @@ int main(int argc, char *argv[])
 
             auto logxmpo = AutoMPO(sites);
             logxmpo += sin(theta2) * Cplx_i, "Sx", 7, "Sx", 8;
+            cout << 1 << endl;
             auto Hlogx = toMPO(logxmpo);
-            psi = sum(cos(theta2) * psi, applyMPO(Hlogx, psi, args).noPrime("Site"), args);
+            cout << 2 << endl;
+            psi = sum(cos(theta2) * psi, applyMPO(Hlogz, psi, args).noPrime("Site"), args);
+            cout << 3 << endl;
             psi.normalize();
 
             // auto logxmpo = AutoMPO(sites);
-            // logxmpo += "Sx", 3, "Sx", 4;
+            // logxmpo += "Sx", 7, "Sx", 8;
             // auto Hlogx = toMPO(logxmpo);
             // auto expHlogx = toExpH(logxmpo, theta2 * Cplx_i, args);
             // psi = applyMPO(expHlogx, psi, args).noPrime("Site");
