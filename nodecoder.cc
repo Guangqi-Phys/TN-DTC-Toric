@@ -21,8 +21,8 @@ int main(int argc, char *argv[])
     double theta0_prob;
     double theta1; // stabilizer operator
     double theta2; // logical x operator
-    int const n_t = 30;
-    int const n_simu = 50;
+    int const n_t = 50;
+    int const n_simu = 100;
     double measure0;
     double measure1;
     double measure2;
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     logzmpo += pow(2, (N / 4)), "Sz", 3, "Sz", 7, "Sz", 11;
     auto Hlogz = toMPO(logzmpo);
 
-    auto args = Args("Cutoff=", 1E-16, "MaxDim=", 500);
+    auto args = Args("Cutoff=", 1E-16, "MaxDim=", 100);
 
     // Make initial MPS psi to be in the all up state
     for (auto j : range1(N))
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     }
 
     ofstream outfile;
-    filename = string("data/nodecoder_") + string("N=") + to_string(N) + string("_MaxDim=500") + string(".dat");
+    filename = string("data/nodecoder_") + string("N=") + to_string(N) + string("_MaxDim=1000") + string(".dat");
 
     outfile.open(filename);
 
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
             {
                 auto x_er = AutoMPO(sites);
                 theta0_prob = theta0 + dist0(engine0);
-                x_er += sin(theta0_prob) * Cplx_i, "Sx", i_er;
+                x_er += 2 * sin(theta0_prob) * Cplx_i, "Sx", i_er;
                 auto xer_mpo = toMPO(x_er);
                 // auto exp_xer_mpo = toExpH(x_er, theta0_prob * Cplx_i);
                 // psi = applyMPO(exp_xer_mpo, psi, args).noPrime("Site");
@@ -93,19 +93,19 @@ int main(int argc, char *argv[])
                 auto stbmpo = AutoMPO(sites);
                 if (b % 4 == 0)
                 {
-                    stbmpo += sin(theta1) * Cplx_i, "Sz", ((b % 12) + 1), "Sz", (((b + 2) % 12) + 1), "Sz", (((b + 3) % 12) + 1), "Sz", (((b + 4) % 12) + 1);
+                    stbmpo += 4 * sin(theta1) * Cplx_i, "Sz", ((b % 12) + 1), "Sz", (((b + 2) % 12) + 1), "Sz", (((b + 3) % 12) + 1), "Sz", (((b + 4) % 12) + 1);
                 }
                 if (b % 4 == 1)
                 {
-                    stbmpo += sin(theta1) * Cplx_i, "Sz", ((b % 12) + 1), "Sz", (((b + 1) % 12) + 1), "Sz", (((b + 2) % 12) + 1), "Sz", (((b + 4) % 12) + 1);
+                    stbmpo += 4 * sin(theta1) * Cplx_i, "Sz", ((b % 12) + 1), "Sz", (((b + 1) % 12) + 1), "Sz", (((b + 2) % 12) + 1), "Sz", (((b + 4) % 12) + 1);
                 }
                 if (b % 4 == 2)
                 {
-                    stbmpo += sin(theta1) * Cplx_i, "Sx", ((b % 12) + 1), "Sx", (((b + 2) % 12) + 1), "Sx", (((b + 3) % 12) + 1), "Sx", (((b + 4) % 12) + 1);
+                    stbmpo += 4 * sin(theta1) * Cplx_i, "Sx", ((b % 12) + 1), "Sx", (((b + 2) % 12) + 1), "Sx", (((b + 3) % 12) + 1), "Sx", (((b + 4) % 12) + 1);
                 }
                 if (b % 4 == 3)
                 {
-                    stbmpo += sin(theta1) * Cplx_i, "Sx", ((b % 12) + 1), "Sx", (((b + 1) % 12) + 1), "Sx", (((b + 2) % 12) + 1), "Sx", (((b + 4) % 12) + 1);
+                    stbmpo += 4 * sin(theta1) * Cplx_i, "Sx", ((b % 12) + 1), "Sx", (((b + 1) % 12) + 1), "Sx", (((b + 2) % 12) + 1), "Sx", (((b + 4) % 12) + 1);
                 }
                 // note that need to do noPrime operation after applyMPO() function.
                 auto Hstb = toMPO(stbmpo);
@@ -132,28 +132,29 @@ int main(int argc, char *argv[])
             // apply logical x operator to state psi
 
             // auto logxmpo = AutoMPO(sites);
-            // logxmpo += "Sx", 7, "Sx", 8;
+            // logxmpo += 4, "Sx", 7, "Sx", 8;
             // auto Hlogx = toMPO(logxmpo);
             // auto expHlogx = toExpH(logxmpo, theta2 * Cplx_i);
             // psi = applyMPO(expHlogx, psi, args).noPrime("Site");
             // psi.normalize();
 
-            // auto logxmpo = AutoMPO(sites);
-            // logxmpo += sin(theta2) * Cplx_i, "Sx", 7, "Sx", 8;
-            // auto Hlogx = toMPO(logxmpo);
-            // psi = sum(cos(theta2) * psi, applyMPO(Hlogx, psi, args).noPrime("Site"), args);
-            // psi.normalize();
+            auto logxmpo = AutoMPO(sites);
+            logxmpo += 4 * sin(theta2) * Cplx_i, "Sx", 7, "Sx", 8;
+            auto Hlogx = toMPO(logxmpo);
+            psi = sum(cos(theta2) * psi, applyMPO(Hlogx, psi, args).noPrime("Site"), args);
+            psi.normalize();
 
-            for (int i = 7; i < 9; i++)
-            {
-                auto logxmpo = AutoMPO(sites);
-                logxmpo += sin(theta2) * Cplx_i, "Sx", i;
-                auto Hlogx = toMPO(logxmpo);
-                psi = sum(cos(theta2) * psi, applyMPO(Hlogx, psi, args).noPrime("Site"), args);
-                psi.normalize();
-                // auto expHlogx = toExpH(logxmpo, theta2 * Cplx_i);
-                // psi = applyMPO(expHlogx, psi, args).noPrime("Site");
-            }
+            // for (int i = 7; i < 9; i++)
+            // {
+            //     auto logxmpo = AutoMPO(sites);
+            //     logxmpo += sin(theta2) * Cplx_i, "Sx", i;
+            //     auto Hlogx = toMPO(logxmpo);
+            //     psi = sum(cos(theta2) * psi, applyMPO(Hlogx, psi, args).noPrime("Site"), args);
+            //     psi.normalize();
+            //     // auto expHlogx = toExpH(logxmpo, theta2 * Cplx_i);
+            //     // psi = applyMPO(expHlogx, psi, args).noPrime("Site");
+            // }
+
             // psi.normalize();
             // PrintData(psi);
 

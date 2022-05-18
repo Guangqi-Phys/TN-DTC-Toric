@@ -27,28 +27,22 @@ set yrange[-1:1]
 
 
 
-# set title "1 sample" font ",24"
-#
-# plot 'data_ns=1_nt=1000.dat' using 1:2 with lines lc 1 lw 2 t "Without decoder",\
-# 'data_ns=1_nt=1000.dat' using 1:3 with lines lc 2 lw 2 t "Without decoder",\
-# 'data_decoder_thd=0.100000_ns=1_nt=1000.dat' using 1:2 with lines lc 3 lw 2 t "With decoder",\
-# 'data_decoder_thd=0.100000_ns=1_nt=1000.dat' using 1:3 with lines lc 4 lw 2 t "With decoder",\
-
-
 set title "" font ",24"
 
-#
-# plot 'nodecoder_dx=3_ns=50_nt=100.dat' using 1:2 with lines ls 1 lw 2 t "1",\
-# 'nodecoder_dx=3_ns=50_nt=100.dat' using 1:3 with lines ls 1 lw 2 t "",\
-# 'decoder_dx=3_ns=50_nt=50.dat' using 1:2 with lines ls 2 lw 2 t "2",\
-# 'decoder_dx=3_ns=50_nt=50.dat' using 1:3 with lines ls 2 lw 2 t "",\
 
 
-plot 'nodecoder_N=12_MaxDim=100.dat' using 1:2 with lines ls 1 lw 2 t "maxdim = 100",\
-'nodecoder_N=12_MaxDim=100.dat' using 1:3 with lines ls 1 lw 2 t "",\
-'nodecoder_N=12_MaxDim=500.dat' using 1:2 with lines ls 2 lw 2 t "maxdim = 1000",\
-'nodecoder_N=12_MaxDim=500.dat' using 1:3 with lines ls 2 lw 2 t "",\
-'nodecoder_dx=3.dat' using 1:2 with lines ls 3 lw 2 t "normal",\
-'nodecoder_dx=3.dat' using 1:3 with lines ls 3 lw 2 t "",\
+plot 'nodecoder_N=12_MaxDim=100_ns=200.dat' using 1:2 with lines ls 1 lw 2 t "200",\
+'nodecoder_N=12_MaxDim=100_ns=200.dat' using 1:3 with lines ls 1 lw 2 t "",\
+'nodecoder_N=12_MaxDim=100_ns=400.dat' using 1:2 with lines ls 3 lw 2 t "400",\
+'nodecoder_N=12_MaxDim=100_ns=400.dat' using 1:3 with lines ls 3 lw 2 t "",\
+'nodecoder_N=12_MaxDim=100.dat' using 1:2 with lines ls 4 lw 2 t "new",\
+'nodecoder_N=12_MaxDim=100.dat' using 1:3 with lines ls 4 lw 2 t "",\
+'nodecoder_dx=3.dat' using 1:2 with lines ls 2 lw 2 t "normal",\
+'nodecoder_dx=3.dat' using 1:3 with lines ls 2 lw 2 t "",\
 
+
+# plot 'decoder_N=12_N_sample=4000.dat' using 1:2 with lines ls 1 lw 2 t "N sample = 4000",\
+# 'decoder_N=12_N_sample=4000.dat' using 1:3 with lines ls 1 lw 2 t "",\
+# 'decoder_N=12_N_sample=8000.dat' using 1:2 with lines ls 2 lw 2 t "N sample = 8000",\
+# 'decoder_N=12_N_sample=8000.dat' using 1:3 with lines ls 2 lw 2 t "",\
 
