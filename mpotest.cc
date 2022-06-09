@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     // PrintData(state);
     // theta0 = 0.02 * M_PI;
     // theta1 = 0.10 * M_PI;
-    theta2 = 0.3 * M_PI;
+    theta2 = 0.5 * M_PI;
 
     pcg_extras::seed_seq_from<random_device> seed_source;
 
@@ -97,15 +97,16 @@ int main(int argc, char *argv[])
     // psi.normalize();
 
     auto logxmpo = AutoMPO(sites);
-    auto logxmpo_t = AutoMPO(sites);
-    logxmpo += 4 * sin(theta2) * Cplx_i, "Sx", 2;
-    logxmpo_t += cos(theta2), "Id", 1, "Id", 2, "Id", 3, "Id", 4, "Id", 5, "Id", 6, "Id", 7, "Id", 8;
+    // auto logxmpo_t = AutoMPO(sites);
+    logxmpo += 2 * sin(theta2) * Cplx_i, "Sx", 2;
+    // // logxmpo_t += 0.3, "Id", 1, "Id", 2, "Id", 3, "Id", 4, "Id", 5, "Id", 6, "Id", 7, "Id", 8;
     auto Hlogx = toMPO(logxmpo);
-    auto Hlogx_t = toMPO(logxmpo_t);
+    // auto Hlogx_t = toMPO(logxmpo_t);
     // psi = applyMPO(Hlogx_t, psi, args).noPrime("Site");
+    // psi = 0.3 * psi;
     // psi = sum(applyMPO(Hlogx_t, psi, args).noPrime("Site"), applyMPO(Hlogx, psi, args).noPrime("Site"), args);
     psi = sum(cos(theta2) * psi, applyMPO(Hlogx, psi, args).noPrime("Site"), args);
-    psi.normalize();
+    // psi.normalize();
 
     // for (int i = 7; i < 9; i++)
     // {

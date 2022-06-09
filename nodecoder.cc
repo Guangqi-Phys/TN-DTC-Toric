@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     logzmpo += pow(2, (N / 4)), "Sz", 3, "Sz", 7, "Sz", 11;
     auto Hlogz = toMPO(logzmpo);
 
-    auto args = Args("Cutoff=", 1E-16, "MaxDim=", 100);
+    auto args = Args("Cutoff=", 1E-16, "MaxDim=", 200);
 
     // Make initial MPS psi to be in the all up state
     for (auto j : range1(N))
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     }
 
     ofstream outfile;
-    filename = string("data/nodecoder_") + string("N=") + to_string(N) + string("_MaxDim=1000") + string(".dat");
+    filename = string("data/nodecoder_") + string("N=") + to_string(N) + string("_MaxDim=200") + string(".dat");
 
     outfile.open(filename);
 
@@ -93,19 +93,19 @@ int main(int argc, char *argv[])
                 auto stbmpo = AutoMPO(sites);
                 if (b % 4 == 0)
                 {
-                    stbmpo += 4 * sin(theta1) * Cplx_i, "Sz", ((b % 12) + 1), "Sz", (((b + 2) % 12) + 1), "Sz", (((b + 3) % 12) + 1), "Sz", (((b + 4) % 12) + 1);
+                    stbmpo += 16 * sin(theta1) * Cplx_i, "Sz", ((b % N) + 1), "Sz", (((b + 2) % N) + 1), "Sz", (((b + 3) % N) + 1), "Sz", (((b + 4) % N) + 1);
                 }
-                if (b % 4 == 1)
+                else if (b % 4 == 1)
                 {
-                    stbmpo += 4 * sin(theta1) * Cplx_i, "Sz", ((b % 12) + 1), "Sz", (((b + 1) % 12) + 1), "Sz", (((b + 2) % 12) + 1), "Sz", (((b + 4) % 12) + 1);
+                    stbmpo += 16 * sin(theta1) * Cplx_i, "Sz", ((b % N) + 1), "Sz", (((b + 1) % N) + 1), "Sz", (((b + 2) % N) + 1), "Sz", (((b + 4) % N) + 1);
                 }
-                if (b % 4 == 2)
+                else if (b % 4 == 2)
                 {
-                    stbmpo += 4 * sin(theta1) * Cplx_i, "Sx", ((b % 12) + 1), "Sx", (((b + 2) % 12) + 1), "Sx", (((b + 3) % 12) + 1), "Sx", (((b + 4) % 12) + 1);
+                    stbmpo += 16 * sin(theta1) * Cplx_i, "Sx", ((b % N) + 1), "Sx", (((b + 2) % N) + 1), "Sx", (((b + 3) % N) + 1), "Sx", (((b + 4) % N) + 1);
                 }
-                if (b % 4 == 3)
+                else if (b % 4 == 3)
                 {
-                    stbmpo += 4 * sin(theta1) * Cplx_i, "Sx", ((b % 12) + 1), "Sx", (((b + 1) % 12) + 1), "Sx", (((b + 2) % 12) + 1), "Sx", (((b + 4) % 12) + 1);
+                    stbmpo += 16 * sin(theta1) * Cplx_i, "Sx", ((b % N) + 1), "Sx", (((b + 1) % N) + 1), "Sx", (((b + 2) % N) + 1), "Sx", (((b + 4) % N) + 1);
                 }
                 // note that need to do noPrime operation after applyMPO() function.
                 auto Hstb = toMPO(stbmpo);

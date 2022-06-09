@@ -35,14 +35,16 @@ plot 'nodecoder_N=12_MaxDim=100_ns=200.dat' using 1:2 with lines ls 1 lw 2 t "20
 'nodecoder_N=12_MaxDim=100_ns=200.dat' using 1:3 with lines ls 1 lw 2 t "",\
 'nodecoder_N=12_MaxDim=100_ns=400.dat' using 1:2 with lines ls 3 lw 2 t "400",\
 'nodecoder_N=12_MaxDim=100_ns=400.dat' using 1:3 with lines ls 3 lw 2 t "",\
-'nodecoder_N=12_MaxDim=100.dat' using 1:2 with lines ls 4 lw 2 t "new",\
-'nodecoder_N=12_MaxDim=100.dat' using 1:3 with lines ls 4 lw 2 t "",\
+'nodecoder_N=12_MaxDim=500.dat' using 1:2 with lines ls 4 lw 2 t "500",\
+'nodecoder_N=12_MaxDim=500.dat' using 1:3 with lines ls 4 lw 2 t "",\
+'nodecoder_N=12_MaxDim=200.dat' using 1:2 with lines ls 5 lw 2 t "200",\
+'nodecoder_N=12_MaxDim=200.dat' using 1:3 with lines ls 5 lw 2 t "",\
 'nodecoder_dx=3.dat' using 1:2 with lines ls 2 lw 2 t "normal",\
 'nodecoder_dx=3.dat' using 1:3 with lines ls 2 lw 2 t "",\
 
 
-# plot 'decoder_N=12_N_sample=4000.dat' using 1:2 with lines ls 1 lw 2 t "N sample = 4000",\
-# 'decoder_N=12_N_sample=4000.dat' using 1:3 with lines ls 1 lw 2 t "",\
-# 'decoder_N=12_N_sample=8000.dat' using 1:2 with lines ls 2 lw 2 t "N sample = 8000",\
-# 'decoder_N=12_N_sample=8000.dat' using 1:3 with lines ls 2 lw 2 t "",\
+# plot 'nodecoder_N=20_MaxDim=200.dat' using 1:2 with lines ls 1 lw 2 t "N sample = 4000",\
+# 'nodecoder_N=20_MaxDim=200.dat' using 1:3 with lines ls 1 lw 2 t "",\
+# 'nodecoder_dx=5.dat' using 1:2 with lines ls 2 lw 2 t "N sample = 8000",\
+# 'nodecoder_dx=5.dat' using 1:3 with lines ls 2 lw 2 t "",\
 
