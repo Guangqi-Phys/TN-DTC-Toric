@@ -21,8 +21,8 @@ int main(int argc, char *argv[])
     double theta0_prob;
     double theta1; // stabilizer operator
     double theta2; // logical x operator
-    int const n_t = 50;
-    int const n_simu = 100;
+    int const n_t = 100;
+    int const n_simu = 10;
     double measure0;
     double measure1;
     double measure2;
@@ -33,8 +33,8 @@ int main(int argc, char *argv[])
     string filename;
 
     // PrintData(state);
-    theta0 = 0.02 * M_PI;
-    theta1 = 0.10 * M_PI;
+    theta0 = 0.03 * M_PI;
+    theta1 = 0.25 * M_PI;
     theta2 = 0.5 * M_PI;
 
     pcg_extras::seed_seq_from<random_device> seed_source;
@@ -75,17 +75,20 @@ int main(int argc, char *argv[])
 
             // adding errors
 
-            for (int i_er = 1; i_er <= N; i_er++)
+            for (int i_er = 1; i_er < N; i_er++)
             {
                 auto x_er = AutoMPO(sites);
-                theta0_prob = theta0 + dist0(engine0);
-                x_er += 2 * sin(theta0_prob) * Cplx_i, "Sx", i_er;
+                // theta0_prob = theta0 + dist0(engine0);
+                theta0_prob = theta0;
+                // x_er += 2 * sin(theta0_prob) * Cplx_i, "Sx", i_er;
+                x_er += 2, "Sx", i_er;
                 auto xer_mpo = toMPO(x_er);
-                // auto exp_xer_mpo = toExpH(x_er, theta0_prob * Cplx_i);
-                // psi = applyMPO(exp_xer_mpo, psi, args).noPrime("Site");
-                psi = sum(cos(theta0_prob) * psi, applyMPO(xer_mpo, psi, args).noPrime("Site"), args);
-                psi.normalize();
+                auto exp_xer_mpo = toExpH(x_er, theta0_prob * Cplx_i);
+                psi = applyMPO(exp_xer_mpo, psi, args).noPrime("Site");
+                // psi = sum(cos(theta0_prob) * psi, applyMPO(xer_mpo, psi, args).noPrime("Site"), args);
             }
+            psi.normalize();
+            // PrintData(psi);
 
             // applying stabilizer operators
             for (int b = 0; b < N; b++)
@@ -110,8 +113,8 @@ int main(int argc, char *argv[])
                 // note that need to do noPrime operation after applyMPO() function.
                 auto Hstb = toMPO(stbmpo);
                 psi = sum(cos(theta1) * psi, applyMPO(Hstb, psi, args).noPrime("Site"), args);
-                psi.normalize();
             }
+            psi.normalize();
 
             // PrintData(psi);
 

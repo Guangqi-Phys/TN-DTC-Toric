@@ -20,7 +20,7 @@ set ylabel "<Logical_{Z}>" font ",18"
 set xtics font ",10"
 set ytics font ",10"
 
-set xrange[0:50]
+set xrange[0:100]
 set yrange[-1:1]
 
 
@@ -30,21 +30,28 @@ set yrange[-1:1]
 set title "" font ",24"
 
 
+#
+# plot 'nodecoder_N=12_MaxDim=200_theta1=0.25.dat' using 1:2 with lines ls 1 lw 2 t "theta1 = 0.25 pi",\
+# 'nodecoder_N=12_MaxDim=200_theta1=0.25.dat' using 1:3 with lines ls 1 lw 2 t "",\
+# 'nodecoder_N=12_MaxDim=200_theta1=0.15.dat' using 1:2 with lines ls 2 lw 2 t "0.15",\
+# 'nodecoder_N=12_MaxDim=200_theta1=0.15.dat' using 1:3 with lines ls 2 lw 2 t "",\
+# 'nodecoder_N=12_MaxDim=200_theta1=0.05.dat' using 1:2 with lines ls 4 lw 2 t "0.05",\
+# 'nodecoder_N=12_MaxDim=200_theta1=0.05.dat' using 1:3 with lines ls 4 lw 2 t "",\
+# 'nodecoder_N=12_MaxDim=200_theta1=0.35.dat' using 1:2 with lines ls 5 lw 2 t "0.35",\
+# 'nodecoder_N=12_MaxDim=200_theta1=0.35.dat' using 1:3 with lines ls 5 lw 2 t "",\
+# 'nodecoder_ns=100_nt=100.dat' using 1:2 with lines ls 3 lw 2 t "normal",\
+# 'nodecoder_ns=100_nt=100.dat' using 1:3 with lines ls 3 lw 2 t "",\
 
-plot 'nodecoder_N=12_MaxDim=100_ns=200.dat' using 1:2 with lines ls 1 lw 2 t "200",\
-'nodecoder_N=12_MaxDim=100_ns=200.dat' using 1:3 with lines ls 1 lw 2 t "",\
-'nodecoder_N=12_MaxDim=100_ns=400.dat' using 1:2 with lines ls 3 lw 2 t "400",\
-'nodecoder_N=12_MaxDim=100_ns=400.dat' using 1:3 with lines ls 3 lw 2 t "",\
-'nodecoder_N=12_MaxDim=500.dat' using 1:2 with lines ls 4 lw 2 t "500",\
-'nodecoder_N=12_MaxDim=500.dat' using 1:3 with lines ls 4 lw 2 t "",\
-'nodecoder_N=12_MaxDim=200.dat' using 1:2 with lines ls 5 lw 2 t "200",\
-'nodecoder_N=12_MaxDim=200.dat' using 1:3 with lines ls 5 lw 2 t "",\
-'nodecoder_dx=3.dat' using 1:2 with lines ls 2 lw 2 t "normal",\
-'nodecoder_dx=3.dat' using 1:3 with lines ls 2 lw 2 t "",\
+# plot 'nodecoder_N=12_MaxDim=200_theta1=0.25.dat' using 1:2 with lines ls 1 lw 2 t "theta0 = 0.02 pi",\
+# 'nodecoder_N=12_MaxDim=200_theta1=0.25.dat' using 1:3 with lines ls 1 lw 2 t "",\
+# 'nodecoder_N=12_MaxDim=200_theta0=0.10.dat' using 1:2 with lines ls 2 lw 2 t "0.10",\
+# 'nodecoder_N=12_MaxDim=200_theta0=0.10.dat' using 1:3 with lines ls 2 lw 2 t "",\
+# 'nodecoder_N=12_MaxDim=200_theta0=0.20.dat' using 1:2 with lines ls 4 lw 2 t "0.20",\
+# 'nodecoder_N=12_MaxDim=200_theta0=0.20.dat' using 1:3 with lines ls 4 lw 2 t "",\
 
 
-# plot 'nodecoder_N=20_MaxDim=200.dat' using 1:2 with lines ls 1 lw 2 t "N sample = 4000",\
-# 'nodecoder_N=20_MaxDim=200.dat' using 1:3 with lines ls 1 lw 2 t "",\
-# 'nodecoder_dx=5.dat' using 1:2 with lines ls 2 lw 2 t "N sample = 8000",\
-# 'nodecoder_dx=5.dat' using 1:3 with lines ls 2 lw 2 t "",\
 
+plot 'nodecoder_N=12_MaxDim=200.dat' using 1:2 with lines ls 1 lw 2 t "400",\
+'nodecoder_N=12_MaxDim=200.dat' using 1:3 with lines ls 1 lw 2 t "",\
+'nodecoder_ns=100_nt=100.dat' using 1:2 with lines ls 3 lw 2 t "normal",\
+'nodecoder_ns=100_nt=100.dat' using 1:3 with lines ls 3 lw 2 t "",\
